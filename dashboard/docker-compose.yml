@@ -1,0 +1,18 @@
+# docker-compose.yml
+version: "3.8"
+
+networks:
+  microservice_network:
+    external:
+      name: microservice_network
+
+services:
+  dashboard-app:
+    container_name: dashboard-app
+    build:
+      context: .
+    ports:
+      - "5000:5000"
+    networks:
+      - microservice_network
+    restart: always

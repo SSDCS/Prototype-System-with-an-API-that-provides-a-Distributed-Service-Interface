@@ -15,12 +15,12 @@ class Config:
 class DevelopmentConfig(Config):
     ENV = "development"
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://cloudacademy:pfm_2020@host.docker.internal:3306/user_dev'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://ssdcs:eZhZ8hwnZ!@host.docker.internal:3306/user_dev'
     SQLALCHEMY_ECHO = True
 
 
 class ProductionConfig(Config):
     ENV = "production"
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://cloudacademy:pfm_2020@user-db:3306/user'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://ssdcs:eZhZ8hwnZ!@user-database:3306/user'
     SQLALCHEMY_ECHO = False

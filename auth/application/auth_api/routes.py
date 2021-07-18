@@ -5,7 +5,7 @@ from auth.application import User
 from flask import make_response, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 
-from passlib.hash import sha256_crypt
+from argon2 import PasswordHasher as ph
 
 
 @login_manager.user_loader
@@ -40,7 +40,7 @@ def post_register():
     email = request.form['email']
     username = request.form['username']
 
-    password = sha256_crypt.hash((str(request.form['password'])))
+    password = ph.hash((str(request.form['password'])))
 
     user = User()
     user.email = email
@@ -63,7 +63,7 @@ def post_login():
     username = request.form['username']
     user = User.query.filter_by(username=username).first()
     if user:
-        if sha256_crypt.verify(str(request.form['password']), user.password):
+        if ph.verify(str(request.form['password']), user.password):
             user.encode_api_key()
             db.session.commit()
             login_user(user)

@@ -1,15 +1,79 @@
-"""
-Dashboard
-"""
-from flask import render_template
-from flask.globals import session
-from dashboard.application import bp
-from ..decorators import login_required
+import requests
+from . import forms
+from dashboard.application.dashboard import bp
+from dashboard.application.dashboard.api import authClient
+from dashboard.application import login_manager
+from flask import render_template, session, redirect, url_for, flash, request
+
+from flask_login import current_user
 
 
-@bp.route('/', methods=['GET', 'POST'])
-@bp.route('/index', methods=['GET', 'POST'])
-@login_required
-def index():
-    user=session['myuser']
-    return render_template('dashboard.html', user=user)
+@login_manager.user_loader
+def load_user(user_id):
+    return None
+
+
+@bp.route('/', methods=['GET'])
+def home():
+    if current_user.is_authenticated:
+        pass
+
+    return render_template('home/index.html')
+
+
+@bp.route('/register', methods=['GET', 'POST'])
+def register():
+    form = forms.RegistrationForm(request.form)
+    if request.method == "POST":
+        if form.validate_on_submit():
+            username = form.username.data
+
+            # Search for existing user
+            user = authClient.does_exist(username)
+            if user:
+                # Existing user found
+                flash('Please try another username', 'error')
+                return render_template('register/index.html', form=form)
+            else:
+                # Attempt to create new user
+                user = authClient.post_user_create(form)
+                if user:
+                    flash('Thanks for registering, please login', 'success')
+                    return redirect(url_for('frontend.login'))
+
+        else:
+            flash('Errors found', 'error')
+
+    return render_template('register/index.html', form=form)
+
+
+@bp.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('frontend.home'))
+    form = forms.LoginForm()
+    if request.method == "POST":
+        if form.validate_on_submit():
+            api_key = authClient.post_login(form)
+            if api_key:
+                session['user_api_key'] = api_key
+                user = authClient.get_user()
+                session['user'] = user['result']
+
+                order = authClient.get_order()
+                if order.get('result', False):
+                    session['order'] = order['result']
+
+                flash('Welcome back, ' + user['result']['username'], 'success')
+                return redirect(url_for('frontend.home'))
+            else:
+                flash('Cannot login', 'error')
+        else:
+            flash('Errors found', 'error')
+    return render_template('login/index.html', form=form)
+
+
+@bp.route('/logout', methods=['GET'])
+def logout():
+    session.clear()
+    return redirect(url_for('frontend.home'))

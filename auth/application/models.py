@@ -1,7 +1,7 @@
 from auth.application import db
 from datetime import datetime
 from flask_login import UserMixin
-from passlib.hash import sha256_crypt
+from argon2 import PasswordHasher as ph
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -20,10 +20,10 @@ class User(UserMixin, db.Model):
         return '<Admin %r>' % self.username
 
     def encode_api_key(self):
-        self.api_key = sha256_crypt.hash(self.username + str(datetime.utcnow))
+        self.api_key = ph.hash(self.username + str(datetime.utcnow))
 
     def encode_password(self):
-        self.password = sha256_crypt.hash(self.password)
+        self.password = ph.hash(self.password)
 
     def __repr__(self):
         return '<User %r>' % (self.username)

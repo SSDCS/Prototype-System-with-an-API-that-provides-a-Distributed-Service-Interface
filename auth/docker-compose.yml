@@ -4,6 +4,7 @@ version: "3.8"
 volumes:
   userdatabase_vol:
 
+
 networks:
   microservice_network:
   external:
@@ -33,6 +34,6 @@ services:
       MYSQL_USER: ssdcs
       MYSQL_PASSWORD: eZhZ8hwnZ!
     networks:
-      - micro_network
+      - microservice_network
     volumes:
       - userdatabase_vol:/var/lib/mysql

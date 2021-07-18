@@ -8,7 +8,7 @@ if os.path.exists(dotenv_path):
 
 
 class Config:
-    SECRET_KEY = "mrfrIMEngCl0pAKqIIBS_g"
+    SECRET_KEY = "thisisasecretkey"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 

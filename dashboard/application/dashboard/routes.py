@@ -60,10 +60,6 @@ def login():
                 user = authClient.get_user()
                 session['user'] = user['result']
 
-                order = authClient.get_order()
-                if order.get('result', False):
-                    session['order'] = order['result']
-
                 flash('Welcome back, ' + user['result']['username'], 'success')
                 return redirect(url_for('frontend.home'))
             else:

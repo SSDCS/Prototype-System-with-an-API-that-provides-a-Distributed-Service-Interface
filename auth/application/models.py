@@ -1,4 +1,4 @@
-from auth.application import db
+from . import db
 from datetime import datetime
 from flask_login import UserMixin
 from argon2 import PasswordHasher as ph

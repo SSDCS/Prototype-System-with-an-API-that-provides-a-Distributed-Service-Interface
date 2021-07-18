@@ -1,0 +1,38 @@
+# docker-compose.yml
+version: "3.8"
+
+volumes:
+  userdatabase_vol:
+
+networks:
+  microservice_network:
+  external:
+    name: microservice_network
+
+services:
+  user-api:
+    container_name: user-service
+    build:
+      context: .
+    ports:
+      - "5001:5001"
+    depends_on:
+      - user-database
+    networks:
+      - microservice_network
+    restart: always
+
+  user-database:
+    container_name: user_database
+    image: mysql:8
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pbSwjE*s2N
+      MYSQL_DATABASE: user
+      MYSQL_USER: ssdcs
+      MYSQL_PASSWORD: eZhZ8hwnZ!
+    networks:
+      - micro_network
+    volumes:
+      - userdatabase_vol:/var/lib/mysql

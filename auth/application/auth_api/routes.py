@@ -4,7 +4,6 @@ from auth.application.auth_api import db, login_manager
 from auth.application import User
 from flask import make_response, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
-
 from argon2 import PasswordHasher as ph
 
 

@@ -1,7 +1,7 @@
 # application/user_api/routes.py
-from . import user_api_blueprint
-from .. import db, login_manager
-from ..models import User
+from auth.application.auth_api import bp
+from auth.application.auth_api import db, login_manager
+from auth.application import User
 from flask import make_response, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -24,7 +24,7 @@ def load_user_from_request(request):
     return None
 
 
-@user_api_blueprint.route('/api/users', methods=['GET'])
+@bp.route('/api/users', methods=['GET'])
 def get_users():
     data = []
     for row in User.query.all():
@@ -33,7 +33,7 @@ def get_users():
     response = jsonify(data)
     return response
 
-@user_api_blueprint.route('/api/user/create', methods=['POST'])
+@bp.route('/api/user/create', methods=['POST'])
 def post_register():
     first_name = request.form['first_name']
     last_name = request.form['last_name']
@@ -58,7 +58,7 @@ def post_register():
     return response
 
 
-@user_api_blueprint.route('/api/user/login', methods=['POST'])
+@bp.route('/api/user/login', methods=['POST'])
 def post_login():
     username = request.form['username']
     user = User.query.filter_by(username=username).first()
@@ -73,7 +73,7 @@ def post_login():
     return make_response(jsonify({'message': 'Not logged in'}), 401)
 
 
-@user_api_blueprint.route('/api/user/logout', methods=['POST'])
+@bp.route('/api/user/logout', methods=['POST'])
 def post_logout():
     if current_user.is_authenticated:
         logout_user()
@@ -81,7 +81,7 @@ def post_logout():
     return make_response(jsonify({'message': 'You are not logged in'}))
 
 
-@user_api_blueprint.route('/api/user/<username>/exists', methods=['GET'])
+@bp.route('/api/user/<username>/exists', methods=['GET'])
 def get_username(username):
     item = User.query.filter_by(username=username).first()
     if item is not None:
@@ -92,7 +92,7 @@ def get_username(username):
 
 
 @login_required
-@user_api_blueprint.route('/api/user', methods=['GET'])
+@bp.route('/api/user', methods=['GET'])
 def get_user():
     if current_user.is_authenticated:
         return make_response(jsonify({'result': current_user.to_json()}))

@@ -14,7 +14,7 @@ def load_user(user_id):
 
 
 @bp.route('/', methods=['GET'])
-def home():
+def index():
     if current_user.is_authenticated:
         pass
 
@@ -39,7 +39,7 @@ def register():
                 user = authClient.post_user_create(form)
                 if user:
                     flash('Thanks for registering, please login', 'success')
-                    return redirect(url_for('frontend.login'))
+                    return redirect(url_for('dashboard.login'))
 
         else:
             flash('Errors found', 'error')
@@ -50,7 +50,7 @@ def register():
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('frontend.home'))
+        return redirect(url_for('dashboard.index'))
     form = forms.LoginForm()
     if request.method == "POST":
         if form.validate_on_submit():
@@ -61,7 +61,7 @@ def login():
                 session['user'] = user['result']
 
                 flash('Welcome back, ' + user['result']['username'], 'success')
-                return redirect(url_for('frontend.home'))
+                return redirect(url_for('dashboard.index'))
             else:
                 flash('Cannot login', 'error')
         else:
@@ -72,4 +72,4 @@ def login():
 @bp.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    return redirect(url_for('frontend.home'))
+    return redirect(url_for('dashboard.index'))

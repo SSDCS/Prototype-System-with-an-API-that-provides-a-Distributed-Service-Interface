@@ -1,40 +1,20 @@
-"""
-Login and Registrationn forms
-"""
-from wtforms import Form, PasswordField, validators, SubmitField, StringField, SelectField
+# application/dashboard/forms.py
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField, HiddenField, IntegerField
+
+from wtforms.validators import DataRequired, Email
 
 
-class Registration(Form):
-    """ Defines the registration form
-
-    Args:
-        Form: Inherits the wtf form libary
-
-    Returns:
-        None
-    """
-    name = StringField("Name:")
-    username = StringField("Username:", [validators.DataRequired()])
-    email = StringField('Email Address:', [
-                        validators.Length(min=6, max=35), validators.Email()])
-    password = PasswordField('New Password:', [
-        validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords must match')
-    ])
-    confirm = PasswordField('Repeat Password:')
-    role = SelectField('Role:', [validators.DataRequired()], choices=[
-                       ('admin', 'Admin'), ('astronaut', 'Astronaut')], validate_choice=True)
-    submit = SubmitField("Submit")
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')
 
 
-class Login(Form):
-    """ Defines the form used for user login
-
-    Args:
-        Form: Inherits the form functions from the wtforms library
-
-    Returns:
-        None
-    """
-    username = StringField("Username:", [validators.DataRequired()])
-    password = PasswordField('Your Password', [validators.DataRequired()])
+class RegistrationForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    first_name = StringField('First name', validators=[DataRequired()])
+    last_name = StringField('Last name', validators=[DataRequired()])
+    email = StringField('Email address', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Register')

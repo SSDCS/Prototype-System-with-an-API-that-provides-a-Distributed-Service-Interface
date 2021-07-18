@@ -18,6 +18,6 @@ def create_app():
 
     with app.app_context():
         # Register blueprints
-        from auth.application.auth_api import bp as auth_bp
+        from .auth_api import bp as auth_bp
         app.register_blueprint(auth_bp)
         return app

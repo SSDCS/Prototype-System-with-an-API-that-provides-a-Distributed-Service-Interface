@@ -1,4 +1,4 @@
-# application/frontend/forms.py
+# application/dashboard/forms.py
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, HiddenField, IntegerField
 

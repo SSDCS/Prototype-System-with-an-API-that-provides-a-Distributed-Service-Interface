@@ -6,7 +6,7 @@
       {% include "_msgs.html"%}
       <div class="text-center h1 mb-3" style="color: brown">Register</div>
       {% from "_formhelpers.html" import render_field %}
-      <form method="post" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data">
         <div>
           {{ render_field(form.first_name, class="form-control", placeholder="Name") }} 
           {{ render_field(form.last_name, class="form-control", placeholder="Name") }} 

@@ -15,10 +15,8 @@ def load_user(user_id):
 
 @bp.route('/', methods=['GET'])
 def index():
-    if current_user.is_authenticated:
-        return render_template('dashboard.html')
-    else:
-        return redirect(url_for('dashboard.login'))
+
+    return render_template('dashboard.html')
 
 
 @bp.route('/register', methods=['GET', 'POST'])

@@ -33,7 +33,7 @@ def register():
             if user:
                 # Existing user found
                 flash('Please try another username', 'error')
-                return render_template('register/index.html', form=form)
+                return render_template('register.html', form=form)
             else:
                 # Attempt to create new user
                 user = authClient.post_user_create(form)

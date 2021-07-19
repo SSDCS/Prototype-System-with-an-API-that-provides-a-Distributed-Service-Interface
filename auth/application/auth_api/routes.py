@@ -63,7 +63,7 @@ def post_login():
     username = request.form['username']
     user = User.query.filter_by(username=username).first()
     if user:
-        if ph.verify(str(request.form['password']), user.password):
+        if ph.verify(user.password, str(request.form['password'])):
             user.encode_api_key()
             db.session.commit()
             login_user(user)

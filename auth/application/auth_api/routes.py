@@ -39,9 +39,7 @@ def post_register():
     email = request.form['email']
     username = request.form['username']
 
-    plain_password = str(request.form['password'])
-
-    password = ph.hash(plain_password)
+    password = ph.hash((str(request.form['password'])))
 
     user = User()
     user.email = email

@@ -10,7 +10,7 @@ class authClient:
             'username': form.username.data,
             'password': form.password.data
         }
-        url = 'http://127.0.0.1:5001/api/user/login'
+        url = 'http://user-service:5001/api/user/login'
         response = requests.request("POST", url=url, data=payload)
         if response:
             d = response.json()
@@ -25,7 +25,7 @@ class authClient:
         headers = {
             'Authorization': 'Basic ' + session['user_api_key']
         }
-        url = 'http://127.0.0.1:5001/api/user'
+        url = 'http://user-service:5001/api/user'
         response = requests.request(method="GET", url=url, headers=headers)
         user = response.json()
         return user
@@ -40,7 +40,7 @@ class authClient:
             'last_name': form.last_name.data,
             'username': form.username.data
         }
-        url = 'http://127.0.0.1:5001/api/user/create'
+        url = 'http://user-service:5001/api/user/create'
         response = requests.request("POST", url=url, data=payload)
         if response:
             user = response.json()
@@ -48,6 +48,6 @@ class authClient:
 
     @staticmethod
     def does_exist(username):
-        url = 'http://127.0.0.1:5001/api/user/' + username + '/exists'
+        url = 'http://user-service:5001/api/user/' + username + '/exists'
         response = requests.request("GET", url=url)
         return response.status_code == 200

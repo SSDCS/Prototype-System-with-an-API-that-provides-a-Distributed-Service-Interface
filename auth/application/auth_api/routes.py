@@ -4,8 +4,9 @@ from .. import db, login_manager
 from ..models import User
 from flask import make_response, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
-from argon2 import PasswordHasher as ph
+from argon2 import PasswordHasher
 
+ph = PasswordHasher()
 
 @login_manager.user_loader
 def load_user(user_id):

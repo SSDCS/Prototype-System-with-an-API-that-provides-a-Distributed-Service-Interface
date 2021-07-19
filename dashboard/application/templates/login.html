@@ -4,8 +4,7 @@
     <div class="col-md-4"></div>
     <div class="col-md-4 mt-4">
       <div class="text-center h1 mb-3" style="color: brown">Login</div>
-      {% include "_msgs.html"%} {% from "_formhelpers.html" import render_field
-      %}
+      {% include "_msgs.html"%} {% from "_formhelpers.html" import render_field %}
       <form method="post" enctype="multipart/form-data">
         <div>
           {{ render_field(form.username, class="form-control") }} 

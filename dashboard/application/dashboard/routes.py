@@ -27,9 +27,11 @@ def register():
     if request.method == "POST":
         if form.validate_on_submit():
             username = form.username.data
+            print(username)
 
             # Search for existing user
             user = authClient.does_exist(username)
+            print(user)
             if user:
                 # Existing user found
                 flash('Please try another username', 'error')

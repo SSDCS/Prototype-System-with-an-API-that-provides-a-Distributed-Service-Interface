@@ -16,7 +16,7 @@ def create_app():
 
     login_manager.init_app(app)
     login_manager.login_message = "You must be login to access this page."
-    login_manager.login_view = "frontend.login"
+    login_manager.login_view = "dashboard.login"
 
     bootstrap.init_app(app)
 

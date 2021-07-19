@@ -1,7 +1,9 @@
 from . import db
 from datetime import datetime
 from flask_login import UserMixin
-from argon2 import PasswordHasher as ph
+from argon2 import PasswordHasher
+
+ph = PasswordHasher()
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)

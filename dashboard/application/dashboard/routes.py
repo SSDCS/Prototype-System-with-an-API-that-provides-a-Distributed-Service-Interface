@@ -1,8 +1,8 @@
 import requests
 from . import forms
-from dashboard.application.dashboard import bp
-from dashboard.application.dashboard.api import authClient
-from dashboard.application import login_manager
+from . import bp
+from .api.authClient import authClient
+from .. import login_manager
 from flask import render_template, session, redirect, url_for, flash, request
 
 from flask_login import current_user
@@ -15,10 +15,8 @@ def load_user(user_id):
 
 @bp.route('/', methods=['GET'])
 def index():
-    if current_user.is_authenticated:
-        pass
 
-    return render_template('home/index.html')
+    return render_template('dashboard.html')
 
 
 @bp.route('/register', methods=['GET', 'POST'])
@@ -33,7 +31,7 @@ def register():
             if user:
                 # Existing user found
                 flash('Please try another username', 'error')
-                return render_template('register/index.html', form=form)
+                return render_template('register.html', form=form)
             else:
                 # Attempt to create new user
                 user = authClient.post_user_create(form)
@@ -44,7 +42,7 @@ def register():
         else:
             flash('Errors found', 'error')
 
-    return render_template('register/index.html', form=form)
+    return render_template('register.html', form=form)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -66,10 +64,10 @@ def login():
                 flash('Cannot login', 'error')
         else:
             flash('Errors found', 'error')
-    return render_template('login/index.html', form=form)
+    return render_template('login.html', form=form)
 
 
 @bp.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    return redirect(url_for('dashboard.index'))
+    return redirect(url_for('dashboard.login'))

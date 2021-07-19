@@ -22,7 +22,7 @@ services:
       - microservice_network
     restart: always
 
-    user-database:
+  user-database:
     container_name: user_database
     image: mysql:8
     ports:

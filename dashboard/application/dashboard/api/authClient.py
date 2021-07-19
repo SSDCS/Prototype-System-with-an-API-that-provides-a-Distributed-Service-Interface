@@ -10,7 +10,7 @@ class authClient:
             'username': form.username.data,
             'password': form.password.data
         }
-        url = 'http://cuser-service:5001/api/user/login'
+        url = 'http://user-service:5001/api/user/login'
         response = requests.request("POST", url=url, data=payload)
         if response:
             d = response.json()

@@ -4,8 +4,9 @@ from .. import db, login_manager
 from ..models import User
 from flask import make_response, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
-from argon2 import PasswordHasher as ph
+from argon2 import PasswordHasher
 
+ph = PasswordHasher()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -62,7 +63,7 @@ def post_login():
     username = request.form['username']
     user = User.query.filter_by(username=username).first()
     if user:
-        if ph.verify(str(request.form['password']), user.password):
+        if ph.verify(user.password, str(request.form['password'])):
             user.encode_api_key()
             db.session.commit()
             login_user(user)

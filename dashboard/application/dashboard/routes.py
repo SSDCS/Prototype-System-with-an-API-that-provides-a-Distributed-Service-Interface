@@ -66,7 +66,7 @@ def login():
                 flash('Cannot login', 'error')
         else:
             flash('Errors found', 'error')
-    return render_template('login/index.html', form=form)
+    return render_template('login.html', form=form)
 
 
 @bp.route('/logout', methods=['GET'])

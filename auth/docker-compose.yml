@@ -4,7 +4,6 @@ version: "3.8"
 volumes:
   userdatabase_vol:
 
-
 networks:
   microservice_network:
   external:

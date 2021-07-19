@@ -70,4 +70,4 @@ def login():
 @bp.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    return redirect(url_for('dashboard.index'))
+    return redirect(url_for('dashboard.login'))

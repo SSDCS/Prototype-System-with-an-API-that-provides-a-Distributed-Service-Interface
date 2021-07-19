@@ -1,8 +1,8 @@
 import requests
 from . import forms
-from dashboard.application.dashboard import bp
-from dashboard.application.dashboard.api import authClient
-from dashboard.application import login_manager
+from . import bp
+from .api.authClient import authClient
+from .. import login_manager
 from flask import render_template, session, redirect, url_for, flash, request
 
 from flask_login import current_user

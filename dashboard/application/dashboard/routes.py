@@ -44,7 +44,7 @@ def register():
         else:
             flash('Errors found', 'error')
 
-    return render_template('register/index.html', form=form)
+    return render_template('register.html', form=form)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
